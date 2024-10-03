@@ -2,54 +2,21 @@
 const Todo = require("./../models/Todo.model");
 const User = require("./../models/User.model");
 
-// get public todos (all public todos)
-// exports.getAllPublicTodos = async (req, res) => {
-//   try {
-//     const todos = await Todo.find({ state: "public" });
+// get all todos
+exports.getAllTodos = async (req, res) => {
+  try {
+    const todos = await Todo.find({
+      authorId: req.user._id,
+    });
 
-//     res.status(200).json({
-//       status: "success",
-//       todos,
-//     });
-//   } catch (err) {
-//     throw err;
-//   }
-// };
-
-// get hidden todos
-// exports.getAllHiddenTodos = async (req, res) => {
-//   try {
-//     const todos = await Todo.find({ state: "hidden" });
-
-//     res.status(200).json({
-//       status: "success",
-//       todos,
-//     });
-//   } catch (err) {
-//     throw err;
-//   }
-// };
-
-// get a single public todo
-// exports.getSingleTodo = async (req, res) => {
-//   try {
-//     const todo = await Todo.findById(req.params.todoId);
-
-//     if (!todo) {
-//       return res.status(404).json({
-//         status: "Failed",
-//         message: "Todo with given Id not found",
-//       });
-//     }
-
-//     res.status(200).json({
-//       status: "success",
-//       todo,
-//     });
-//   } catch (err) {
-//     throw err;
-//   }
-// };
+    res.status(200).json({
+      status: "success",
+      todos,
+    });
+  } catch (err) {
+    throw err;
+  }
+};
 
 // create a todo
 exports.createATodo = async (req, res) => {
