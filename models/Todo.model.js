@@ -7,6 +7,11 @@ const TodoSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    state: {
+      type: String,
+      enum: ["hidden", "public"],
+      default: "public",
+    },
     message: {
       type: String,
       required: [true, "A todo must have a message"],
