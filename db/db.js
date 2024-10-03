@@ -10,12 +10,12 @@ function connectToDB() {
 
   // add event listener to test connection
   mongoose.connection.on("connected", () => {
-    console.log("connection to db successful");
+    console.log("Connection to DB successful");
   });
 
   // catch error
   mongoose.connection.on("error", (err) => {
-    console.log("connection to db failed");
+    console.log("Connection to DB failed");
     console.log(err);
   });
 }
