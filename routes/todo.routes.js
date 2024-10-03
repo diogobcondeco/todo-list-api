@@ -11,7 +11,6 @@ const authController = require("./../auth/auth");
 const router = express.Router();
 
 // API endpoint structure
-router.get("/", authController.authenticate, todoController.getAllPublicTodos);
 router.post("/", authController.authenticate, todoController.createATodo);
 router.put("/:todoId", authController.authenticate, todoController.updateATodo);
 router.delete(
