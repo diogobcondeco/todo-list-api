@@ -3,18 +3,18 @@ const Todo = require("./../models/Todo.model");
 const User = require("./../models/User.model");
 
 // get public todos (all public todos)
-exports.getAllPublicTodos = async (req, res) => {
-  try {
-    const todos = await Todo.find({ state: "public" });
+// exports.getAllPublicTodos = async (req, res) => {
+//   try {
+//     const todos = await Todo.find({ state: "public" });
 
-    res.status(200).json({
-      status: "success",
-      todos,
-    });
-  } catch (err) {
-    throw err;
-  }
-};
+//     res.status(200).json({
+//       status: "success",
+//       todos,
+//     });
+//   } catch (err) {
+//     throw err;
+//   }
+// };
 
 // get hidden todos
 // exports.getAllHiddenTodos = async (req, res) => {

@@ -11,7 +11,7 @@ const authController = require("./../auth/auth");
 const router = express.Router();
 
 // API endpoint for an author
-router.get("/author", authController.authenticate, userController.getAllTodos);
+router.get("/todos", authController.authenticate, userController.getAllTodos);
 
 // API endpoint for signup and login
 router.post("/auth/signup", authController.signup);
