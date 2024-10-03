@@ -70,7 +70,7 @@ exports.createATodo = async (req, res) => {
 
     // add the new created todo to "todos" array property on the user document
     let user = await User.findById(req.user._id);
-    user.posts.push(todo._id);
+    user.todos.push(todo._id);
     await user.save(); // save changes made to the user doc
 
     // send back response
