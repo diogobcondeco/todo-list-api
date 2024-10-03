@@ -12,9 +12,9 @@ const TodoSchema = new mongoose.Schema(
       enum: ["hidden", "public"],
       default: "public",
     },
-    message: {
+    description: {
       type: String,
-      required: [true, "A todo must have a message"],
+      required: [true, "A todo must have a description"],
     },
     tags: [String],
     author: {

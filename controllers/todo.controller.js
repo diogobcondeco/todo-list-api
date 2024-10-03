@@ -54,7 +54,7 @@ const User = require("./../models/User.model");
 // create a todo
 exports.createATodo = async (req, res) => {
   try {
-    const { message, tags } = req.body;
+    const { description, tags } = req.body;
 
     // get author name and author id
     let { first_name, last_name } = req.user;
@@ -62,7 +62,7 @@ exports.createATodo = async (req, res) => {
     let authorId = req.user._id;
 
     const todo = await Todo.create({
-      message,
+      description,
       tags,
       author,
       authorId,
@@ -84,5 +84,60 @@ exports.createATodo = async (req, res) => {
 };
 
 // update a todo
+exports.updateATodo = async (req, res) => {
+  const { isDone, state, description, tags } = req.body;
+
+  try {
+    const todo = await Todo.findByIdAndUpdate(
+      req.params.todoId,
+      {
+        $set: { isDone, state, description, tags },
+      },
+      { new: true }
+    );
+
+    // check if todo belongs to the user initiating the request
+    if (todo.authorId.toString() !== req.user._id.toString()) {
+      return res.status(401).json({
+        status: "Fail",
+        message: "You can only update the todo you created!",
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      todo,
+    });
+  } catch (err) {
+    throw err;
+  }
+};
 
 // delete a todo
+exports.deleteATodo = async (req, res) => {
+  try {
+    const todo = await Todo.findByIdAndDelete(req.params.todoId, {
+      authorId: req.user.id,
+    });
+
+    if (!todo) {
+      return res.status(404).json({
+        status: "Fail",
+        message: "Todo with given Id not found",
+      });
+    }
+
+    // delete todo from "todos" array in user the document
+    const todoByUser = await User.findById(req.user._id);
+    todoByUser.todos.pull(todo._id);
+    await todoByUser.updateOne({ todos: todoByUser.todos });
+
+    // return deleted todo
+    res.status(200).json({
+      status: "success",
+      message: "Todo deleted successfully",
+    });
+  } catch (err) {
+    throw err;
+  }
+};
