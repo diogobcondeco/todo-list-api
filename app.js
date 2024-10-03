@@ -1,11 +1,10 @@
 const express = require("express");
+
+// create express app
 const app = express();
-const port = 3000;
 
-app.get("/", (req, res) => {
-  res.send("hello world!");
-});
+// add middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+module.exports = app;
